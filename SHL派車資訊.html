@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHL瑞健每日運送板數</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        label, select, input, br {
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        select, input, label {
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+<label for="itemSelect">車牌：</label>
+<select id="itemSelect" onchange="displaySelectedItem()" required>
+    <option value="" disabled selected>請選擇車牌</option>
+    <option value="SCL-KLL-1234">SCL-KLL-1234</option>
+    <option value="SCL-KLL-6789">SCL-KLL-6789</option>
+    <option value="SCL-KLF-5432">SCL-KLF-5432</option>
+    <option value="SCL-KLL-3456">SCL-KLL-3456</option>
+    <option value="SCL-KLL-6666">SCL-KLL-6666</option>
+</select>
+
+<br>
+
+<label for="driverSelect">司機：</label>
+<select id="driverSelect" onchange="displaySelectedDriver()" required>
+    <option value="" disabled selected>請選擇司機</option>
+    <option value="王大明">王大明</option>
+    <option value="李大頭">李大頭</option>
+    <option value="張三風">張三風</option>
+    <option value="林阿山">林阿山</option>
+    <option value="陳丙丁">陳丙丁</option>
+    <option value="趙小二">趙小二</option>
+</select>
+
+<br>
+
+<label>起點：</label>
+<select id="pickupSelect" name="pickup" required>
+    <option value="NK10">NK10</option>
+    <option value="LF">LF</option>
+    <option value="GS">GS</option>
+    <option value="TY1">TY1</option>
+    <option value="TY2">TY2</option>
+    <option value="NK2">NK2</option>
+</select>
+
+<br>
+
+<label>終點：</label>
+<select id="destinationSelect" name="destination" required>
+    <option value="NK10">NK10</option>
+    <option value="LF">LF</option>
+    <option value="GS">GS</option>
+    <option value="TY1">TY1</option>
+    <option value="TY2">TY2</option>
+    <option value="NK2">NK2</option>
+</select>
+<br>
+
+<label for="dateInput">日期：</label>
+<input type="date" id="dateInput" value="" min="" required>
+
+<br>
+
+<label for="timeInput">時間：</label>
+<input type="time" id="timeInput" value="" step="60" required>
+
+<br>
+
+<div style="display: flex; flex-wrap: wrap;">
+    <div style="width: 100%;">
+        <label for="productInput">成品：</label>
+        <input type="number" id="productInput" name="product" min="0" step="1" oninput="calculateTotal()" required>
+    </div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap;">
+    <div style="width: 100%;">
+        <label for="materialInput">原料：</label>
+        <input type="number" id="materialInput" name="material" min="0" step="1" oninput="calculateTotal()" required>
+    </div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap;">
+    <div style="width: 100%;">
+        <label for="partInput">零件：</label>
+        <input type="number" id="partInput" name="part" min="0" step="1" oninput="calculateTotal()" required>
+    </div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap;">
+    <div style="width: 100%;">
+        <label for="packagingInput">包材：</label>
+        <input type="number" id="packagingInput" name="packaging" min="0" step="1" oninput="calculateTotal()" required>
+    </div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap;">
+    <div style="width: 100%;">
+        <label for="otherInput">其他：</label>
+        <input type="number" id="otherInput" name="other" min="0" step="1" oninput="calculateTotal()" required>
+    </div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap;">
+    <div style="width: 100%;">
+        <label for="otherDescription">說明：</label>
+        <input type="text" id="otherDescription" name="otherDescription" oninput="calculateTotal()" required>
+    </div>
+</div>
+
+<p id="total">總數將顯示在這裡。</p>
+
+<label for="photoInput">上傳照片：</label>
+<input type="file" id="photoInput" accept="image/*" multiple onchange="displaySelectedPhotos()" required>
+
+<script>
+ function calculateTotal() {
+        var product = parseFloat(document.getElementById('productInput').value) || 0;
+        var material = parseFloat(document.getElementById('materialInput').value) || 0;
+        var part = parseFloat(document.getElementById('partInput').value) || 0;
+        var packaging = parseFloat(document.getElementById('packagingInput').value) || 0;
+        var other = parseFloat(document.getElementById('otherInput').value) || 0;
+
+        var total = product + material + part + packaging + other;
+        document.getElementById('total').textContent = "總數：" + total;
+    }
+    function displaySelectedPhotos() {
+        var input = document.getElementById('photoInput');
+        var selectedPhotos = input.files;
+
+        for (var i = 0; i < selectedPhotos.length; i++) {
+            console.log("Selected Photo: " + selectedPhotos[i].name);
+            // 在這裡你可以進行其他處理，如上傳到伺服器或調整大小
+        }
+    }
+</script>
+
+</body>
+</html>
